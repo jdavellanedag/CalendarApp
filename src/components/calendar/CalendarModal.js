@@ -6,9 +6,9 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { uiCloseModal } from "../../actions/ui";
 import {
-  eventAddNew,
   eventClearActiveEvent,
-  eventUpdated,
+  eventStartAddNew,
+  eventStartUpdated,
 } from "../../actions/events";
 
 const customStyles = {
@@ -99,21 +99,10 @@ export const CalendarModal = () => {
     if (title.trim().length < 2) {
       return setIsTitleValid(false);
     }
-    //TODO: Go to DB
     if (activeEvent) {
-      dispatch(eventUpdated(formValues));
+      dispatch(eventStartUpdated(formValues));
     } else {
-      dispatch(
-        eventAddNew({
-          ...formValues,
-          //TODO: Remove test data
-          id: new Date().getTime(),
-          user: {
-            _id: "123",
-            name: "Julian",
-          },
-        })
-      );
+      dispatch(eventStartAddNew(formValues));
     }
     setIsTitleValid(true);
     closeModal();
